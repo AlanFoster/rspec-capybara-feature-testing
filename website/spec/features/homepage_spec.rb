@@ -1,8 +1,14 @@
 require 'rails_helper'
 
-feature 'Visiting the homepage', type: :feature do
+feature 'Homepage', type: :feature do
   scenario 'Visiting the homepage' do
-    visit '/welcome/index'
+    visit '/'
+    expect(page).to have_content('Welcome!')
+  end
+
+  scenario 'visiting the homepage and navigating to the homepage' do
+    visit '/'
+    click_on 'Home'
     expect(page).to have_content('Welcome!')
   end
 end
