@@ -1,0 +1,6 @@
+- if model.errors.any?
+  %errors
+    #{pluralize model.errors.count, 'errors'} stopped this form being submitted.
+    %ul
+      - model.errors.full_messages.each do |error|
+        %li #{error}
