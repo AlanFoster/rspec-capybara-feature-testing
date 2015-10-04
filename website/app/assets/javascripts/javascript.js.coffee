@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$ ->
+  fake_server_response = ->
+    $('#server-loading').hide()
+    $('#server-response').show()
+
+  $('#server-trigger').click ->
+    $('#server-loading').show()
+    $('#server-response').hide()
+
+    setTimeout fake_server_response, 2000
