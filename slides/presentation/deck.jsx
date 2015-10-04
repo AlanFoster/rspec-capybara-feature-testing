@@ -1,120 +1,158 @@
-import React from "react/addons";
+import React from 'react/addons';
 
 import {
   Appear, BlockQuote, Cite, CodePane, Deck, Fill,
   Heading, Image, Layout, Link, ListItem, List, Quote, Slide, Text
-} from "../src/spectacle";
+} from '../src/spectacle';
 
-import preloader from "../src/utils/preloader";
+import images from './images';
 
-import Interactive from "./interactive";
-
-const images = {
-  city: require("./city.jpg"),
-  kat: require("./kat.png"),
-  logo: require("./formidable-logo.svg")
-};
-
-preloader([images.city, images.kat]);
+const slidesUrl = 'https://github.com/AlanFoster/react-presentation';
 
 export default class extends React.Component {
   render() {
     return (
-      <Deck transition={["zoom", "slide"]} transitionDuration={800}>
-        <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="black">
-            Spectacle
+      <Deck transition={['zoom', 'slide']} transitionDuration={800}>
+        <Slide transition={['zoom']} bgColor='primary'>
+          <Image src={images.ruby.replace('/','')} margin='0px auto 40px' height='293px'/>
+          <Heading size={1} fit caps lineHeight={1} textColor='black'>
+            Capybara
           </Heading>
-          <Heading size={1} fit caps>
-            A ReactJS Presentation Library
+          <Heading size={2} fit caps textColor="tertiary">
+            Introduction to web testing
           </Heading>
-          <Heading size={1} fit caps textColor="black">
-            Where You Can Write Your Decks In JSX
-          </Heading>
-          <Link href="https://github.com/FormidableLabs/spectacle">
-            <Text bold caps textColor="tertiary">View on Github</Text>
+          <Link href={slidesUrl}>
+            <Text bold caps textColor='black'>{slidesUrl}</Text>
           </Link>
-          <Text textSize="1.5em" margin="20px 0px 0px" bold>Hit Your Right Arrow To Begin!</Text>
         </Slide>
-        <Slide transition={["slide"]} bgColor="black" notes="You can even put notes on your slide. How awesome is that?">
-          <Image src={images.kat.replace("/", "")} margin="0px auto 40px" height="293px"/>
-          <Heading size={1} fit textColor="primary" textFont="secondary">
-            Wait what?
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading size={1} fit textColor='primary' textFont='secondary'>
+            Why Test?
           </Heading>
+
+          <Appear>
+            <Image src={images.fire.replace('/','')} margin='0px auto 40px' height='293px'/>
+          </Appear>
         </Slide>
-        <Slide transition={["zoom", "fade"]} bgColor="primary" notes="<ul><li>talk about that</li><li>and that</li></ul>">
+
+        <Slide transition={['slide']} bgColor='black'>
+          <List textColor="primary">
+            <ListItem><Appear>Developers make mistakes; forgetting edge cases etc</Appear></ListItem>
+            <ListItem><Appear>This leads to defects</Appear></ListItem>
+            <ListItem><Appear>Testing finds the presence of bugs; not always the absense</Appear></ListItem>
+            <ListItem><Appear>Improve the Product's quality</Appear></ListItem>
+            <ListItem><Appear>Remove any defects before they reach an end user</Appear></ListItem>
+            <ListItem><Appear>Eliminate Regression Issues</Appear></ListItem>
+            <ListItem><Appear>Tracability to requirements</Appear></ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['fade']} bgColor='secondary' textColor='primary'>
+          <Heading size={1} fit textColor='primary' textFont='secondary'>
+            How to test
+          </Heading>
+
+          <List>
+            <ListItem><Appear>Todo</Appear></ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['zoom', 'fade']} bgColor='primary'>
+          <Heading size={1} fit textColor='black' textFont='secondary'>
+            Manual Testing
+          </Heading>
+
+          <List textColor="white">
+            <ListItem><Appear>Exploratory testing can find issues</Appear></ListItem>
+            <ListItem><Appear>Exploratory testing can find issues</Appear></ListItem>
+            <ListItem><Appear>Find regressions</Appear></ListItem>
+            <ListItem><Appear>Add a failing scenario to the existing test suite</Appear></ListItem>
+            <ListItem><Appear>Parallelise testing</Appear></ListItem>
+            <ListItem><Appear>Automate cross-browser testing</Appear></ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['zoom', 'fade']} bgColor='primary'>
+          <Heading size={1} fit textColor='black' textFont='secondary'>
+            Automation!
+          </Heading>
+
+          <List textColor="white">
+            <ListItem><Appear>Repeat the same test suite multiple times</Appear></ListItem>
+            <ListItem><Appear>Find regressions</Appear></ListItem>
+            <ListItem><Appear>Add a failing scenario to the existing test suite</Appear></ListItem>
+            <ListItem><Appear>Parallelise testing</Appear></ListItem>
+            <ListItem><Appear>Automate cross-browser testing</Appear></ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['slide']} bgImage={images.ruby.replace('/', '')} bgDarken={0.75}>
+          <Appear fid='1'>
+            <Heading size={1} caps fit textColor='primary'>
+              Capybara
+            </Heading>
+          </Appear>
+          <Appear fid='2'>
+            <Heading size={1} caps fit textColor='tertiary'>
+              Browser Automation
+            </Heading>
+          </Appear>
+          <Appear fid='3'>
+            <Heading size={1} caps textColor='primary'>
+              ... in Ruby!
+            </Heading>
+          </Appear>
+        </Slide>
+        <Slide transition={['zoom', 'fade']} bgColor='primary'>
+          <Heading caps fit>Demo</Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading size={1} caps textColor='primary'>
+            Basic Example
+          </Heading>
+
           <CodePane
-            lang="javascript"
-            source={require("raw!./deck.example")}
+            lang="ruby"
+            source={require("raw!./../../website/spec/features/homepage_spec.rb")}
             margin="20px auto"/>
         </Slide>
-        <Slide transition={["slide"]} bgImage={images.city.replace("/", "")} bgDarken={0.75}>
-          <Appear fid="1">
-            <Heading size={1} caps fit textColor="primary">
-              Full Width
-            </Heading>
-          </Appear>
-          <Appear fid="2">
-            <Heading size={1} caps fit textColor="tertiary">
-              Adjustable Darkness
-            </Heading>
-          </Appear>
-          <Appear fid="3">
-            <Heading size={1} caps fit textColor="primary">
-              Background Imagery
-            </Heading>
-          </Appear>
+
+        <Slide transition={['slide', 'spin']} bgColor='primary'>
+          <Heading size={1} caps textColor='primary'>
+            Forms
+          </Heading>
+
+          <CodePane
+            lang="ruby"
+            source={require("raw!./../../website/spec/features/homepage_spec.rb")}
+            margin="20px auto"/>
         </Slide>
-        <Slide transition={["zoom", "fade"]} bgColor="primary">
-          <Heading caps fit>Flexible Layouts</Heading>
-          <Layout>
-            <Fill>
-              <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                Left
-              </Heading>
-            </Fill>
-            <Fill>
-              <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                Right
-              </Heading>
-            </Fill>
-          </Layout>
-        </Slide>
-        <Slide transition={["slide"]} bgColor="black">
-          <BlockQuote>
-            <Quote>Wonderfully formatted quotes</Quote>
-            <Cite>Ken Wheeler</Cite>
-          </BlockQuote>
-        </Slide>
-        <Slide transition={["slide", "spin"]} bgColor="primary">
-          <Heading caps fit size={1} textColor="tertiary">
+
+        <Slide transition={['slide', 'spin']} bgColor='primary'>
+          <Heading caps fit size={1} textColor='tertiary'>
             Smooth
           </Heading>
-          <Heading caps fit size={1} textColor="secondary">
+          <Heading caps fit size={1} textColor='secondary'>
             Combinable Transitions
           </Heading>
         </Slide>
-        <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
+
+        <Slide transition={['fade']} bgColor='secondary' textColor='primary'>
           <List>
-            <ListItem><Appear fid="1">Inline style based theme system</Appear></ListItem>
-            <ListItem><Appear fid="2">Autofit text</Appear></ListItem>
-            <ListItem><Appear fid="3">Flexbox layout system</Appear></ListItem>
-            <ListItem><Appear fid="4">React-Router navigation</Appear></ListItem>
-            <ListItem><Appear fid="5">PDF export</Appear></ListItem>
-            <ListItem><Appear fid="6">And...</Appear></ListItem>
+            <ListItem><Appear fid='1'>Inline style based theme system</Appear></ListItem>
+            <ListItem><Appear fid='2'>Autofit text</Appear></ListItem>
+            <ListItem><Appear fid='3'>Flexbox layout system</Appear></ListItem>
+            <ListItem><Appear fid='4'>React-Router navigation</Appear></ListItem>
+            <ListItem><Appear fid='5'>PDF export</Appear></ListItem>
+            <ListItem><Appear fid='6'>And...</Appear></ListItem>
           </List>
         </Slide>
-        <Slide transition={["slide"]} bgColor="primary">
-          <Heading size={1} caps fit textColor="tertiary">
-            Your presentations are interactive
-          </Heading>
-          <Interactive/>
-        </Slide>
-        <Slide transition={["spin", "slide"]} bgColor="tertiary">
-          <Heading size={1} caps fit lineHeight={1.5} textColor="primary">
+        <Slide transition={['spin', 'slide']} bgColor='tertiary'>
+          <Heading size={1} caps fit lineHeight={1.5} textColor='primary'>
             Made with love in Seattle by
           </Heading>
-          <Link href="http://www.formidablelabs.com"><Image width="100%" src={images.logo}/></Link>
+          <Link href='http://www.formidablelabs.com'><Image width='100%' src={images.logo}/></Link>
         </Slide>
       </Deck>
     );
