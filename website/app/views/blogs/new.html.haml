@@ -1,0 +1,12 @@
+%h1 Create Blog
+
+= form_for :blog, url: blogs_path do |f|
+  %div
+    = f.label :title
+    = f.text_field :title
+
+  %div
+    = f.label :text
+    = f.text_area :text
+
+  = f.submit

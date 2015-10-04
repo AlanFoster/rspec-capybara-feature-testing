@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
   get 'javascript/index'
-  get 'forms/index'
+
+  resources :blogs
 end

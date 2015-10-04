@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'JavaScript Examples', type: :feature do
   scenario 'Visiting the main page' do

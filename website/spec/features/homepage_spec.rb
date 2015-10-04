@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'Homepage', type: :feature do
   scenario 'Visiting the homepage' do
