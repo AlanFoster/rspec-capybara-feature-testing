@@ -5,10 +5,4 @@ feature 'Homepage', type: :feature do
     visit '/'
     expect(page).to have_content('Welcome!')
   end
-
-  scenario 'visiting the homepage and navigating to the homepage' do
-    visit '/'
-    click_on 'Home'
-    expect(page).to have_content('Welcome!')
-  end
 end

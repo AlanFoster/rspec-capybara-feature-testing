@@ -1,11 +1,47 @@
 import React from 'react/addons';
+import s from 'underscore.string';
 
 import {
   Appear, BlockQuote, Cite, CodePane, Deck, Fill,
   Heading, Image, Layout, Link, ListItem, List, Quote, Slide, Text
 } from '../src/spectacle';
 
+
 import images from './images';
+
+const examples = (() => {
+  const scenarios = (input) => {
+    var lines = s.lines(input);
+    var accumulator = { isConsuming: false, scenarios: [], buffer: [] };
+    var result = _.reduce(lines, (memo, nextLine) => {
+      if (!memo.isConsuming && s(nextLine).trim().startsWith('scenario')) {
+        memo.isConsuming = true;
+      }
+
+      if(memo.isConsuming) {
+        memo.buffer = memo.buffer.concat(nextLine)
+      }
+
+      if(memo.isConsuming && s(nextLine).trim().startsWith('end')) {
+        memo.isConsuming = false;
+        memo.scenarios.push(memo.buffer.join('\n'));
+        memo.buffer = [];
+      }
+
+      return accumulator;
+    }, accumulator);
+
+    return result.scenarios;
+  };
+
+  const forms = require("raw!./../../website/spec/features/blogs_spec.rb");
+
+  return {
+    homepage: require("raw!./../../website/spec/features/homepage_spec.rb"),
+    formsSuccess: scenarios(forms)[0],
+    formsValidation: scenarios(forms)[1]
+  }
+})();
 
 const slidesUrl = 'https://github.com/AlanFoster/react-presentation';
 
@@ -107,29 +143,40 @@ export default class extends React.Component {
           <Heading caps fit>Demo</Heading>
         </Slide>
 
-        <Slide transition={['slide']} bgColor='black'>
+        <Slide transition={['zoom', 'fade']} bgColor='black'>
           <Heading size={1} caps textColor='primary'>
             Basic Example
           </Heading>
 
           <CodePane
             lang="ruby"
-            source={require("raw!./../../website/spec/features/homepage_spec.rb")}
+            source={examples.homepage}
             margin="20px auto"/>
         </Slide>
 
-        <Slide transition={['slide', 'spin']} bgColor='primary'>
+        <Slide transition={['zoom', 'fade']}  bgColor='black'>
           <Heading size={1} caps textColor='primary'>
-            Forms
+            Forms #1
           </Heading>
 
           <CodePane
             lang="ruby"
-            source={require("raw!./../../website/spec/features/homepage_spec.rb")}
+            source={examples.formsSuccess}
             margin="20px auto"/>
         </Slide>
 
-        <Slide transition={['slide', 'spin']} bgColor='primary'>
+        <Slide transition={['zoom', 'fade']} bgColor='black'>
+          <Heading size={1} caps textColor='primary'>
+            Forms #2
+          </Heading>
+
+          <CodePane
+            lang="ruby"
+            source={examples.formsValidation}
+            margin="20px auto"/>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='primary'>
           <Heading caps fit size={1} textColor='tertiary'>
             Smooth
           </Heading>
