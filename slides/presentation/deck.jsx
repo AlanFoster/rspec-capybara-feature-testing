@@ -1,20 +1,22 @@
 import React from 'react/addons';
-import s from 'underscore.string';
+import { trim, lines} from 'underscore.string';
 
 import {
   Appear, BlockQuote, Cite, CodePane, Deck, Fill,
   Heading, Image, Layout, Link, ListItem, List, Quote, Slide, Text
 } from '../src/spectacle';
-
+import _ from 'lodash';
 
 import images from './images';
 
+const trimAllLeft = (content) => _.map(_.tail(lines(content)), (line) => trim(line)).join('\n');
+
 const examples = (() => {
   const scenarios = (input) => {
-    var lines = s.lines(input);
+    var allLines = lines(input);
     var accumulator = { isConsuming: false, scenarios: [], buffer: [] };
-    var result = _.reduce(lines, (memo, nextLine) => {
-      if (!memo.isConsuming && s(nextLine).trim().startsWith('scenario')) {
+    var result = _.reduce(allLines, (memo, nextLine) => {
+      if (!memo.isConsuming && trim(nextLine).startsWith('scenario')) {
         memo.isConsuming = true;
       }
 
@@ -22,7 +24,7 @@ const examples = (() => {
         memo.buffer = memo.buffer.concat(nextLine)
       }
 
-      if(memo.isConsuming && s(nextLine).trim().startsWith('end')) {
+      if(memo.isConsuming && trim(nextLine).startsWith('end')) {
         memo.isConsuming = false;
         memo.scenarios.push(memo.buffer.join('\n'));
         memo.buffer = [];
@@ -73,52 +75,37 @@ export default class extends React.Component {
 
         <Slide transition={['slide']} bgColor='black'>
           <List textColor="primary">
-            <ListItem><Appear>Developers make mistakes; forgetting edge cases etc</Appear></ListItem>
-            <ListItem><Appear>This leads to defects</Appear></ListItem>
-            <ListItem><Appear>Testing finds the presence of bugs; not always the absense</Appear></ListItem>
-            <ListItem><Appear>Improve the Product's quality</Appear></ListItem>
-            <ListItem><Appear>Remove any defects before they reach an end user</Appear></ListItem>
-            <ListItem><Appear>Eliminate Regression Issues</Appear></ListItem>
-            <ListItem><Appear>Tracability to requirements</Appear></ListItem>
+            <ListItem>Developers make mistakes; forgetting edge cases etc</ListItem>
+            <ListItem>Testing finds the presence of bugs; not always the absense</ListItem>
+            <ListItem>Improve the Product's quality</ListItem>
+            <ListItem>Remove any defects before they reach an end user</ListItem>
+            <ListItem>Future proof for the next developer</ListItem>
+            <ListItem>Eliminate Regression Issues</ListItem>
+            <ListItem>Tracability to requirements</ListItem>
           </List>
         </Slide>
 
         <Slide transition={['fade']} bgColor='secondary' textColor='primary'>
-          <Heading size={1} fit textColor='primary' textFont='secondary'>
-            How to test
-          </Heading>
+          <Appear>
+            <Heading size={1} fit textColor='primary' textFont='secondary'>
+              Testing from the outside in
+            </Heading>
+          </Appear>
 
-          <List>
-            <ListItem><Appear>Todo</Appear></ListItem>
-          </List>
+          <Appear>
+            <Link href='https://robots.thoughtbot.com/testing-from-the-outsidein'>
+              <Text textColor='white'>https://robots.thoughtbot.com/testing-from-the-outsidein</Text>
+            </Link>
+          </Appear>
         </Slide>
 
-        <Slide transition={['zoom', 'fade']} bgColor='primary'>
-          <Heading size={1} fit textColor='black' textFont='secondary'>
-            Manual Testing
-          </Heading>
-
-          <List textColor="white">
-            <ListItem><Appear>Exploratory testing can find issues</Appear></ListItem>
-            <ListItem><Appear>Exploratory testing can find issues</Appear></ListItem>
-            <ListItem><Appear>Find regressions</Appear></ListItem>
-            <ListItem><Appear>Add a failing scenario to the existing test suite</Appear></ListItem>
-            <ListItem><Appear>Parallelise testing</Appear></ListItem>
-            <ListItem><Appear>Automate cross-browser testing</Appear></ListItem>
-          </List>
-        </Slide>
-
-        <Slide transition={['zoom', 'fade']} bgColor='primary'>
-          <Heading size={1} fit textColor='black' textFont='secondary'>
-            Automation!
-          </Heading>
-
-          <List textColor="white">
-            <ListItem><Appear>Repeat the same test suite multiple times</Appear></ListItem>
-            <ListItem><Appear>Find regressions</Appear></ListItem>
-            <ListItem><Appear>Add a failing scenario to the existing test suite</Appear></ListItem>
-            <ListItem><Appear>Parallelise testing</Appear></ListItem>
-            <ListItem><Appear>Automate cross-browser testing</Appear></ListItem>
+        <Slide transition={['slide']} bgColor='black'>
+          <List textColor="primary">
+            <ListItem>Still applying TDD (Test Driven Development)</ListItem>
+            <ListItem>Write high level feature tests first</ListItem>
+            <ListItem>From a particular end user's perspective</ListItem>
+            <ListItem>We still write lower level tests</ListItem>
+            <ListItem>Lower layer tests will pass first, before outer layer tests</ListItem>
           </List>
         </Slide>
 
@@ -139,6 +126,7 @@ export default class extends React.Component {
             </Heading>
           </Appear>
         </Slide>
+
         <Slide transition={['zoom', 'fade']} bgColor='primary'>
           <Heading caps fit>Demo</Heading>
         </Slide>
@@ -178,28 +166,70 @@ export default class extends React.Component {
 
         <Slide transition={['slide']} bgColor='primary'>
           <Heading caps fit size={1} textColor='tertiary'>
-            Smooth
+            Sounds perfect!
           </Heading>
           <Heading caps fit size={1} textColor='secondary'>
-            Combinable Transitions
+            Right?
           </Heading>
         </Slide>
 
-        <Slide transition={['fade']} bgColor='secondary' textColor='primary'>
-          <List>
-            <ListItem><Appear fid='1'>Inline style based theme system</Appear></ListItem>
-            <ListItem><Appear fid='2'>Autofit text</Appear></ListItem>
-            <ListItem><Appear fid='3'>Flexbox layout system</Appear></ListItem>
-            <ListItem><Appear fid='4'>React-Router navigation</Appear></ListItem>
-            <ListItem><Appear fid='5'>PDF export</Appear></ListItem>
-            <ListItem><Appear fid='6'>And...</Appear></ListItem>
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading caps fit size={1} textColor='tertiary'>
+            Common Gotchas...
+          </Heading>
+          <List textColor="primary">
+            <ListItem>Asserting Content / CSS / etc without inbuilt wait for behaviour</ListItem>
+            <ListItem>Mis-clicking - Animations, incorrectly clicking a parent etc</ListItem>
+            <ListItem>Clicking elements before JavaScript listeners are bound</ListItem>
+            <ListItem>Forgetting to run JavaScript</ListItem>
+            <ListItem>Cross-browser driver issues</ListItem>
           </List>
         </Slide>
-        <Slide transition={['spin', 'slide']} bgColor='tertiary'>
-          <Heading size={1} caps fit lineHeight={1.5} textColor='primary'>
-            Made with love in Seattle by
+
+        <Slide transition={['zoom', 'fade']} bgColor='black'>
+            <Heading size={1} caps textColor='primary'>
+              Asserting Content
+            </Heading>
+
+            <Text caps textColor='red'>Bad</Text>
+            <CodePane
+              lang="ruby"
+              source={trimAllLeft(`
+                #  Potential Race Condition - page.content may not have the required text yet
+                expect(page.content).to match('Success!')
+              `)}
+              margin="20px auto"/>
+
+          <Appear>
+            <Text caps textColor='green'>Good</Text>
+            <CodePane
+              lang="ruby"
+              source={trimAllLeft(`
+                # Prefer to use capybara's built in matchers
+                # which will keep trying until to assert content
+                # until Capybara.default_max_wait_time (2 seconds) has surpassed
+                expect(page).to have_content('Success!')
+              `)}
+              margin="20px auto"/>
+            </Appear>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading size={5} caps textColor='primary'>
+            Other useful Capybara rspec matchers...
           </Heading>
-          <Link href='http://www.formidablelabs.com'><Image width='100%' src={images.logo}/></Link>
+
+          <List textColor="white">
+            <ListItem>have_selector / have_css</ListItem>
+            <ListItem>have_text / have_content</ListItem>
+            <ListItem>have_current_path</ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['spin', 'slide']}>
+          <Link href={slidesUrl}>
+            <Text bold fit textColor='white'>{slidesUrl}</Text>
+          </Link>
         </Slide>
       </Deck>
     );
