@@ -68,9 +68,7 @@ export default class extends React.Component {
             Why Test?
           </Heading>
 
-          <Appear>
-            <Image src={images.fire.replace('/','')} margin='0px auto 40px' height='293px'/>
-          </Appear>
+          <Image src={images.fire.replace('/','')} margin='0px auto 40px' height='293px'/>
         </Slide>
 
         <Slide transition={['slide']} bgColor='black'>
@@ -79,6 +77,11 @@ export default class extends React.Component {
             <ListItem>Testing finds the presence of bugs; not always the absense</ListItem>
             <ListItem>Improve the Product's quality</ListItem>
             <ListItem>Remove any defects before they reach an end user</ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <List textColor="primary">
             <ListItem>Future proof for the next developer</ListItem>
             <ListItem>Eliminate Regression Issues</ListItem>
             <ListItem>Tracability to requirements</ListItem>
