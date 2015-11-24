@@ -6,7 +6,8 @@ var webpackConfig = getConfig({
   in: "./index.jsx",
   out: "dist",
   clearBeforeBuild: true,
-  html: config.html
+  html: config.html,
+  port: 3001
 });
 
 webpackConfig.module.loaders[0] = {
