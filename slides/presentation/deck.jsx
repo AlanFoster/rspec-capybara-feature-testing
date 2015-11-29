@@ -7,9 +7,23 @@ import {
 } from '../src/spectacle';
 import _ from 'lodash';
 
-import images from './images';
+import allImages from './images';
 
-const trimAllLeft = (content) => _.map(_.tail(lines(content)), (line) => trim(line)).join('\n');
+const images = _.mapValues(allImages, (path) => path.replace('/',''));
+
+const trimAllLeft = function(content) {
+  const allLines = lines(content);
+  const isEmptyLine = (line) => trim(line) === '';
+  const mainLines = _.dropRightWhile(_.dropWhile(allLines, isEmptyLine), isEmptyLine);
+
+  if (mainLines.length === 0) return '';
+
+  const firstLine = mainLines[0];
+  const firstLineLeftPadding = firstLine.length - trim(firstLine).length;
+  const formattedLines = _.map(mainLines, (line) => line.substring(firstLineLeftPadding))
+
+  return formattedLines.join('\n');
+};
 
 const examples = (() => {
   const scenarios = (input) => {
@@ -33,7 +47,7 @@ const examples = (() => {
       return accumulator;
     }, accumulator);
 
-    return result.scenarios;
+    return _.map(result.scenarios, trimAllLeft);
   };
 
   const forms = require("raw!./../../website/spec/features/blogs_spec.rb");
@@ -52,7 +66,7 @@ export default class extends React.Component {
     return (
       <Deck transition={['zoom', 'slide']} transitionDuration={800}>
         <Slide transition={['zoom']} bgColor='primary'>
-          <Image src={images.ruby.replace('/','')} margin='0px auto 40px' height='293px'/>
+          <Image src={images.ruby} margin='0px auto 40px' height='293px'/>
           <Heading size={1} fit caps lineHeight={1} textColor='black'>
             Capybara
           </Heading>
@@ -68,9 +82,7 @@ export default class extends React.Component {
             Why Test?
           </Heading>
 
-          <Appear>
-            <Image src={images.fire.replace('/','')} margin='0px auto 40px' height='293px'/>
-          </Appear>
+          <Image src={images.fire} margin='0px auto 40px' height='293px'/>
         </Slide>
 
         <Slide transition={['slide']} bgColor='black'>
@@ -79,6 +91,11 @@ export default class extends React.Component {
             <ListItem>Testing finds the presence of bugs; not always the absense</ListItem>
             <ListItem>Improve the Product's quality</ListItem>
             <ListItem>Remove any defects before they reach an end user</ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <List textColor="primary">
             <ListItem>Future proof for the next developer</ListItem>
             <ListItem>Eliminate Regression Issues</ListItem>
             <ListItem>Tracability to requirements</ListItem>
@@ -97,16 +114,6 @@ export default class extends React.Component {
               <Text textColor='white'>https://robots.thoughtbot.com/testing-from-the-outsidein</Text>
             </Link>
           </Appear>
-        </Slide>
-
-        <Slide transition={['slide']} bgColor='black'>
-          <List textColor="primary">
-            <ListItem>Still applying TDD (Test Driven Development)</ListItem>
-            <ListItem>Write high level feature tests first</ListItem>
-            <ListItem>From a particular end user's perspective</ListItem>
-            <ListItem>We still write lower level tests</ListItem>
-            <ListItem>Lower layer tests will pass first, before outer layer tests</ListItem>
-          </List>
         </Slide>
 
         <Slide transition={['slide']} bgImage={images.ruby.replace('/', '')} bgDarken={0.75}>
@@ -129,6 +136,64 @@ export default class extends React.Component {
 
         <Slide transition={['zoom', 'fade']} bgColor='primary'>
           <Heading caps fit>Demo</Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='secondary' textColor='primary'>
+          <Image src={images.ruby} margin='0px auto 40px' height='200px'/>
+
+          <Heading size={1} caps textColor='primary'>
+            Ruby
+          </Heading>
+
+          <Heading size={2} caps fit textColor='tertiary'>
+            A Programming language
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='secondary' textColor='primary'>
+          <Image src={images.rails} margin='0px auto 40px' height='293px'/>
+
+          <Heading size={1} caps textColor='primary'>
+            Rails
+          </Heading>
+
+          <Heading size={2} caps fit textColor='tertiary'>
+            A web application framework written in Ruby
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='secondary' textColor='primary'>
+          <Image src={images.rspec} margin='0px auto 40px' height='293px'/>
+
+          <Heading size={1} caps textColor='primary'>
+            rspec
+          </Heading>
+
+          <Heading size={2} caps fit textColor='tertiary'>
+            Ruby Testing Framework
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='secondary' textColor='primary'>
+          <Image src={images.rspec} margin='0px auto 40px' height='293px'/>
+
+          <Heading size={1} caps textColor='primary'>
+            Capybara
+          </Heading>
+
+          <Heading size={2} caps fit textColor='tertiary'>
+            Allows us to test web applications
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='secondary' textColor='primary'>
+          <Heading size={1} caps textColor='primary'>
+            DSL
+          </Heading>
+
+          <Heading size={2} caps fit textColor='tertiary'>
+            Domain Specific Language
+          </Heading>
         </Slide>
 
         <Slide transition={['zoom', 'fade']} bgColor='black'>
@@ -179,7 +244,7 @@ export default class extends React.Component {
           </Heading>
           <List textColor="primary">
             <ListItem>Asserting Content / CSS / etc without inbuilt wait for behaviour</ListItem>
-            <ListItem>Mis-clicking - Animations, incorrectly clicking a parent etc</ListItem>
+            <ListItem>misclicking - Animations, incorrectly clicking a parent etc</ListItem>
             <ListItem>Clicking elements before JavaScript listeners are bound</ListItem>
             <ListItem>Forgetting to run JavaScript</ListItem>
             <ListItem>Cross-browser driver issues</ListItem>
@@ -224,6 +289,147 @@ export default class extends React.Component {
             <ListItem>have_text / have_content</ListItem>
             <ListItem>have_current_path</ListItem>
           </List>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            misclicks
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            Animations
+          </Heading>
+
+          <Text bold textColor='white'>Hitting a moving target is hard...</Text>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Image src={images.modal} margin='0px auto 40px'/>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Text bold textColor='white'>Initial attempt</Text>
+
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              click_on 'Launch demo modal'
+
+              click_on 'button'
+              expect(page).to have_content 'some amazing content'
+            `)}
+            margin="20px auto"/>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading size={4} textColor='primary'>
+            But we keep misclicking...
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            Solution
+          </Heading>
+
+          <Text bold textColor='white'>Use sleeps!</Text>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              click_on 'Launch demo modal'
+
+              sleep 1 # let's hope for the best!
+
+              click_on 'button'
+              expect(page).to have_content 'some amazing content'
+            `)}
+            margin="20px auto"/>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading size={4} textColor='primary'>
+            But we still keep misclicking on CI...
+          </Heading>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            Solution
+          </Heading>
+
+          <Text bold textColor='white'>Use a longer sleep!</Text>
+
+          <Appear>
+            <Text bold textColor='white'>Or...</Text>
+          </Appear>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Text bold textColor='white'>Use classes as a semaphore...</Text>
+
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              click_on 'Launch demo modal'
+
+              expect(page).to have_selector '.modal.in' # The .in class is only added once fully opened
+
+              click_on 'button'
+              expect(page).to have_content 'some amazing content'
+            `)}
+            margin="20px auto"/>
+        </Slide>
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            More misclicks
+          </Heading>
+
+          <CodePane
+            lang="html"
+            source={trimAllLeft(`
+              <div id="my_link">
+                <a href="...">...</a>
+              </div>
+            `)}
+            margin="20px auto"/>
+
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              find('#my_link').click
+            `)}
+            margin="20px auto"/>
+
+          <Appear>
+            <Text bold textColor='white'>Always click the required element</Text>
+
+            <CodePane
+              lang="ruby"
+              source={trimAllLeft(`
+                find('#my_link > a').click
+              `)}
+              margin="20px auto"/>
+          </Appear>
+        </Slide>
+
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            Forgetting to run JavaScript
+          </Heading>
+
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              describe 'JavaScript Example', :js do
+            `)}
+            margin="20px auto"/>
         </Slide>
 
         <Slide transition={['spin', 'slide']}>

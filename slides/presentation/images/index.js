@@ -1,4 +1,7 @@
 export default {
   ruby: require('./ruby.png'),
-  fire: require('./fire.jpg')
+  rails: require('./rails.png'),
+  rspec: require('./rspec.png'),
+  fire: require('./fire.jpg'),
+  modal: require('./modal.gif'),
 };
