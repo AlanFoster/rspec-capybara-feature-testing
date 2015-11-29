@@ -3,12 +3,12 @@
 = form_for :blog, url: blogs_path do |f|
   = show_errors_for @blog
 
-  %div
+  %div.form-group
     = f.label :title
-    = f.text_field :title
+    = f.text_field :title, class: "form-control"
 
-  %div
+  %div.form-group
     = f.label :text
-    = f.text_area :text
+    = f.text_area :text, class: "form-control"
 
-  = f.submit
+  = f.submit class: 'btn btn-default'
