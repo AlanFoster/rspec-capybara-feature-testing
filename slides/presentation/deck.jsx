@@ -405,8 +405,32 @@ export default class extends React.Component {
               find('#my_link').click
             `)}
             margin="20px auto"/>
+
+          <Appear>
+            <Text bold textColor='white'>Always click the required element</Text>
+
+            <CodePane
+              lang="ruby"
+              source={trimAllLeft(`
+                find('#my_link > a').click
+              `)}
+              margin="20px auto"/>
+          </Appear>
         </Slide>
 
+
+        <Slide transition={['slide']} bgColor='black'>
+          <Heading  caps textColor='primary'>
+            Forgetting to run JavaScript
+          </Heading>
+
+          <CodePane
+            lang="ruby"
+            source={trimAllLeft(`
+              describe 'JavaScript Example', :js do
+            `)}
+            margin="20px auto"/>
+        </Slide>
 
         <Slide transition={['spin', 'slide']}>
           <Link href={slidesUrl}>
