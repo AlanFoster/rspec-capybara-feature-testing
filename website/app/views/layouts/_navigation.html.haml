@@ -1,4 +1,9 @@
-%ul
-  %li= link_to 'Home', root_path
-  %li= link_to 'Form Examples', new_blog_path
-  %li= link_to 'JavaScript Examples', javascript_index_path
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand{:href => "#"} RSpec Demo
+    %div
+      %ul.nav.navbar-nav
+        = nav_link 'Home', root_path
+        = nav_link 'Form Examples', new_blog_path
+        = nav_link 'JavaScript Examples', javascript_index_path
