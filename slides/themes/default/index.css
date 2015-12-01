@@ -23,3 +23,15 @@ html, body {
 * {
   box-sizing: border-box;
 }
+
+.slides-url {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 99999;
+}
+
+.slides-url > a {
+  color: white !important;
+  text-decoration: none !important;
+}
