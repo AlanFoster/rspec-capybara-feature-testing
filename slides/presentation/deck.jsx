@@ -236,11 +236,11 @@ export default class extends React.Component {
               Common Mishaps...
             </Heading>
             <List textColor="primary">
-              <ListItem>Asserting Content / CSS / etc without inbuilt wait for behaviour</ListItem>
-              <ListItem>misclicking - Animations, incorrectly clicking a parent etc</ListItem>
-              <ListItem>Clicking elements before JavaScript listeners are bound</ListItem>
+              <ListItem>Not using inbuilt wait for behaviour</ListItem>
+              <ListItem>Misclicking</ListItem>
+              <ListItem>Clicking before JavaScript setup</ListItem>
               <ListItem>Forgetting to run JavaScript</ListItem>
-              <ListItem>Cross-browser driver issues</ListItem>
+              <ListItem>Cross-browser issues</ListItem>
             </List>
           </Slide>
 
@@ -307,7 +307,7 @@ export default class extends React.Component {
               Animations
             </Heading>
 
-            <Text bold textColor='white'>Hitting a moving target is hard...</Text>
+            <Text bold textColor='white'>Hitting a moving target is hard!</Text>
           </Slide>
 
           <Slide transition={['slide']} bgColor='black'>
@@ -381,7 +381,7 @@ export default class extends React.Component {
           </Slide>
 
           <Slide transition={['slide']} bgColor='black'>
-            <Heading size={4} textColor='white'>Use classes as a semaphore...</Heading>
+            <Heading size={4} textColor='white'>Use classes as a semaphore</Heading>
             <Text bold textColor='white'>(ie, a waiting flag)</Text>
 
             <CodePane
@@ -433,8 +433,8 @@ export default class extends React.Component {
 
 
           <Slide transition={['slide']} bgColor='black'>
-            <Heading caps textColor='primary'>
-              Forgetting to run JavaScript
+            <Heading size={4} textColor='primary'>
+              Remember: Run JavaScript
             </Heading>
 
             <CodePane
