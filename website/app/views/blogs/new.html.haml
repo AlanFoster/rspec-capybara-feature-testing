@@ -1,14 +1,15 @@
 %h1 Create Blog
 
-= form_for :blog, url: blogs_path do |f|
-  = show_errors_for @blog
+.blog--new
+  = form_for :blog, url: blogs_path do |f|
+    = show_errors_for @blog
 
-  %div.form-group
-    = f.label :title
-    = f.text_field :title, class: "form-control"
+    %div.form-group
+      = f.label :title
+      = f.text_field :title, class: "form-control"
 
-  %div.form-group
-    = f.label :text
-    = f.text_area :text, class: "form-control"
+    %div.form-group
+      = f.label :text
+      = f.text_area :text, class: "form-control"
 
-  = f.submit class: 'btn btn-default'
+    = f.submit class: 'btn btn-default'
