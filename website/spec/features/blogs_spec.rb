@@ -1,36 +1,32 @@
 require 'feature_helper'
+require_relative '../pages/new_blog'
+require_relative '../pages/view_blog'
 
-feature 'Form Examples', type: :feature do
+feature 'Blog management', type: :feature do
+  let(:new_blog_page) { ::Pages::NewBlog.new }
+  let(:view_blog_page) { ::Pages::ViewBlog.new }
+
+  before :each do
+    new_blog_page.visit_location
+  end
+
   scenario 'Successfully creating a new blog' do
-    visit '/'
+    new_blog_page.create title: 'My Blog Title',
+                         text: 'My new blog text'
 
-    click_on 'Form Examples'
-    expect(page).to have_content('Create Blog')
-
-    fill_in 'blog_title', with: 'My Blog Title'
-    fill_in 'blog_text', with: 'My new blog text'
-
-    click_on 'Save Blog'
-    expect(page).to have_selector('.blog--show')
-
-    expect(page).to have_content('My Blog Title')
-    expect(page).to have_content('My new blog text')
+    expect(view_blog_page).to have_loaded
+    expect(view_blog_page).to have_blog title: 'My Blog Title',
+                                        text: 'My new blog text'
   end
 
   scenario 'Entering no data' do
-    visit '/'
-    click_on 'Form Examples'
+    new_blog_page.create title: '',
+                         text: ''
 
-    expect(page).to have_content('Create Blog')
-
-    click_on 'Save Blog'
-
-    expect(page).to have_content('4 errors stopped this form being submitted')
-
-    expect(page).to have_content("Title can't be blank")
-    expect(page).to have_content("Text can't be blank")
-
-    expect(page).to have_content('Title is too short')
-    expect(page).to have_content('Text is too short')
+    expect(view_blog_page).to_not have_loaded
+    expect(new_blog_page).to have_errors "Title can't be blank",
+                                         "Text can't be blank",
+                                         "Title is too short",
+                                         "Text is too short"
   end
 end
