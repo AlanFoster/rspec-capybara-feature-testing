@@ -1,4 +1,4 @@
-class Blog < ActiveRecord::Base
+class Blog < ApplicationRecord
   validates :title, presence: true,
             length: { minimum: 5 }
 
