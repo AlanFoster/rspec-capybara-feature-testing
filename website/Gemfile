@@ -14,14 +14,20 @@ gem 'spring', group: :development
 gem 'haml-rails'
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'capybara'
-  gem 'capybara-screenshot'
-  gem 'selenium-webdriver'
   gem 'pry'
   gem 'pry-nav'
   gem 'pry-stack_explorer'
   gem 'listen'
+  gem 'table_print'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit'
+  gem 'selenium-webdriver'
+  gem 'puffing-billy', git: 'https://github.com/AlanFoster/puffing-billy', branch: 'add-additional-request-tracking'
 end
 
 gem 'bootstrap-sass'
