@@ -3,14 +3,17 @@ require 'feature_helper'
 feature 'JavaScript Examples', type: :feature, js: true do
   def stub_github
     github_url = 'https://api.github.com:443/'
-    proxy.stub(github_url, method: :options).and_return(
-      headers: {
-        'Access-Control-Allow-Methods' => 'GET, PATCH, POST, PUT, OPTIONS',
-        'Access-Control-Allow-Headers' => 'X-Force-Cors',
-        'Access-Control-Allow-Origin' => '*'
-      },
-      code: 200
-    )
+    # Capybara Webkit appears to die if CORS preflight doesn't work as expected
+    unless ENV['FORCE_WEBKIT_CRASH'] == 'true'
+      proxy.stub(github_url, method: :options).and_return(
+        headers: {
+          'Access-Control-Allow-Methods' => 'GET, PATCH, POST, PUT, OPTIONS',
+          'Access-Control-Allow-Headers' => 'X-Force-Cors',
+          'Access-Control-Allow-Origin' => '*'
+        },
+        code: 200
+      )
+    end
     proxy.stub(github_url).and_return({
       headers: {
         'Access-Control-Allow-Methods' => 'GET, PATCH, POST, PUT, OPTIONS',
